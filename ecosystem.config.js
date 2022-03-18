@@ -15,8 +15,8 @@ module.exports = {
       name: "mng-api",
       log_date_format: "YYYY-MM-DD HH:mm Z",
       script: process.env.NODE_ENV === "production" ? "build/index.js" : "src/index.ts",
-      autorestart: true,
-      watch: true,
+      autorestart: process.env.NODE_ENV === "development",
+      watch: process.env.NODE_ENV === "development",
       time: true,
       instances: "max",
       exec_mode: "cluster",
@@ -27,6 +27,7 @@ module.exports = {
       // default variables
       env: {
         IS_ON_SERVER: true,
+        NODE_ENV: "development",
       },
 
       // production environment

@@ -1,6 +1,6 @@
 import Controller from "./Controller";
 import { Request, Response } from "express";
-import mngUserLogic from "../../domain/logic/MngUserLogic";
+import mngUserLogic from "../logic/MngUserLogic";
 
 class MngUserController extends Controller {
   public async list(req: Request, res: Response) {

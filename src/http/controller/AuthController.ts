@@ -1,6 +1,6 @@
 import Controller from "./Controller";
 import { Request, Response } from "express";
-import authLogic from "../../domain/logic/AuthLogic";
+import authLogic from "../logic/AuthLogic";
 
 class AuthController extends Controller {
   public async login(req: Request, res: Response) {
