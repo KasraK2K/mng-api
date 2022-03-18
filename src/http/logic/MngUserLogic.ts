@@ -25,32 +25,30 @@ class MngUserLogic extends Logic {
       const value = objectValidator(args.data ?? {}, objectSchema.manager.upsert);
 
       if ("errors" in value) return reject({ result: false, error_code: 3002, errors: value.errors });
-      else {
-        /* REVIEW I hold this for venue and we see that another time */
-        // const sql_schema = {
-        //   table_name: `"mng_users"`,
-        //   checking_data_field: "table_id",
-        //   table_id: "table_id",
-        //   returning: "table_id",
-        //   fields: {
-        //     name: { field: "name" },
-        //     email: { field: "email" },
-        //     access: { field: "access" },
-        //     password: { field: "password" },
-        //   },
-        // };
+      /* REVIEW I hold this for venue and we see that another time */
+      // const sql_schema = {
+      //   table_name: `"mng_users"`,
+      //   checking_data_field: "table_id",
+      //   table_id: "table_id",
+      //   returning: "table_id",
+      //   fields: {
+      //     name: { field: "name" },
+      //     email: { field: "email" },
+      //     access: { field: "access" },
+      //     password: { field: "password" },
+      //   },
+      // };
 
-        value.password && (value.hashPassword = hashGen(value.password));
+      value.password && (value.hashPassword = hashGen(value.password));
 
-        await mngUserRepository
-          .upsert(value)
-          .then((response) => {
-            resolve({ result: true, data: [response] });
-          })
-          .catch((err) => {
-            reject(err);
-          });
-      }
+      await mngUserRepository
+        .upsert(value)
+        .then((response) => {
+          resolve({ result: true, data: [response] });
+        })
+        .catch((err) => {
+          reject(err);
+        });
     });
   }
 }

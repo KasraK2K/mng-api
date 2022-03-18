@@ -32,40 +32,61 @@ class MngUserRepository extends Repository {
       const { id, email, password, hashPassword, name, access } = data;
 
       let query = "";
-      if (Number(id) === 0) {
-        query = `
-          INSERT INTO mng_users
-          (email, password, name, access )
-          VALUES ('${email}', '${hashPassword}', '${name}' , '${access}' )
-          RETURNING id
-        `;
-      } else {
-        const editPassword = password.length ? ` , password = '${hashPassword}' ` : "";
-        query = `
-          Update mng_users
-          SET name = '${name}', email = '${email}', access = '${access}' ${editPassword}
-          WHERE id = ${id}
-        `;
-      }
+      let existUser: Record<string, any>[] = [];
 
-      await super
-        .executeQuery({ query, source: pg.pool_cloud })
-        .then((qres) => {
-          const returnData: Record<string, any> = {};
-          if (!data.id || String(data.id) === "0") {
-            console.log("qres", qres);
-            const lastID = qres.rows[0].id;
-            returnData.saved_id = lastID;
-          } else {
-            returnData.saved_id = data.id;
-          }
-
-          resolve({ result: true, data: returnData });
+      await this.list({ email })
+        .then((response) => {
+          existUser = response;
         })
         .catch((err) => {
+          logger(`{red} error manager user upsert {reset}`);
           logger(`{red}${err.stack}{reset}`, LoggerEnum.ERROR);
-          reject({ result: false });
+          reject(err);
         });
+
+      // ─────────────────────────────────────────── INSERT NEW USER ─────
+      if (Number(id) === 0) {
+        if (existUser.length) return reject({ result: false, error_code: 3003 });
+        else
+          query = `
+            INSERT INTO mng_users
+            (email, password, name, access )
+            VALUES ('${email}', '${hashPassword}', '${name}' , '${access}' )
+            RETURNING id
+          `;
+      }
+      // ───────────────────────────────────────── UPDATE EXIST USER ─────
+      else {
+        const editPassword = password.length ? `password = '${hashPassword}'` : "";
+        if (existUser.length && existUser[0].id !== Number(id)) {
+          return reject({ result: false, error_code: 3003 });
+        } else {
+          query = `
+            Update mng_users
+            SET name = '${name}', email = '${email}', access = '${access}', ${editPassword}
+            WHERE id = ${id}
+          `;
+        }
+      }
+
+      query &&
+        (await super
+          .executeQuery({ query, source: pg.pool_cloud })
+          .then((qres) => {
+            const returnData: Record<string, any> = {};
+            if (!data.id || String(data.id) === "0") {
+              const lastID = qres.rows[0].id;
+              returnData.saved_id = lastID;
+            } else {
+              returnData.saved_id = data.id;
+            }
+
+            resolve({ result: true, data: returnData });
+          })
+          .catch((err) => {
+            logger(`{red}${err.stack}{reset}`, LoggerEnum.ERROR);
+            reject({ result: false });
+          }));
     });
   }
 }

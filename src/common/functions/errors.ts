@@ -2,7 +2,7 @@ const map = new Map([
   [3000, "Something went wrong"],
   [3001, "Not Found"],
   [3002, "Validation error"],
-  [3003, "This email is already registered"],
+  [3003, "This email has already been registered"],
   [3004, "Unauthenticated"],
   [3005, "Method not allowed"],
   [3006, "Too Many Requests"],
