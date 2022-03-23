@@ -14,7 +14,7 @@ class VenueRepository extends Repository {
           const generalSearch = args.search.general;
           const generalSearchInt = parseInt(generalSearch) || -1;
           where.push(`
-          (v.name like '%${generalSearch}%')
+          (v.name LIKE '%${generalSearch}%')
           OR (v."loyaltySchemeID" = ${generalSearchInt})
           OR (v.id = ${generalSearchInt})
         `);
@@ -31,10 +31,10 @@ class VenueRepository extends Repository {
       // ────────────────────────────── START: GENERATE FIELD STRING ─────
       let fields = `
         v.id, v.name, v.description,  v.latitude, v.longitude, v.street, v.city, v.country, v.zip, v.area, v.timezone, 
-        v.active, v.released, v.cuisines, v.orderlink as order_link, v."pointPeriod" as point_period, v."pointLimit" as point_limit,
-        v."distanceLimit" as distance_limit, v."mappingVanueID" as mapping_venue_id, v."onlineOrderingCommission"::float as online_ordering_commission,
-        v."contactNumber" as contact_number, v."pointAmountFormula"::float as point_formula, v.currency, v.working_hours , v.scheme_ids,
-        v.launch as launch_date, v.beacon as beacons, v.venue_categories as categories
+        v.active, v.released, v.cuisines, v.orderlink AS order_link, v."pointPeriod" AS point_period, v."pointLimit" AS point_limit,
+        v."distanceLimit" AS distance_limit, v."mappingVanueID" AS mapping_venue_id, v."onlineOrderingCommission"::float AS online_ordering_commission,
+        v."contactNumber" AS contact_number, v."pointAmountFormula"::float AS point_formula, v.currency, v.working_hours , v.scheme_ids,
+        v.launch AS launch_date, v.beacon AS beacons, v.venue_categories AS categories
       `;
 
       if ("fields" in args) {
@@ -45,11 +45,11 @@ class VenueRepository extends Repository {
       // ──────────────────────────────── END: GENERATE FIELD STRING ─────
 
       const query = `
-        SELECT ${fields}, l.name as scheme_name
+        SELECT ${fields}, l.name AS scheme_name
         FROM "Venues" v
-        LEFT JOIN "LoyaltySchemes" l on l.id = v."loyaltySchemeID"
+        LEFT JOIN "LoyaltySchemes" l ON l.id = v."loyaltySchemeID"
         ${whereStr}
-        ORDER BY id desc limit 200
+        ORDER BY id DESC LIMIT 200
       `;
 
       await super
