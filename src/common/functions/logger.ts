@@ -55,3 +55,5 @@ export const logger = (text: any, type = LoggerEnum.INFO) => {
       fs.appendFile(path + "all.log", `${date} ${time} ${text} \n`, (err) => console.log(err));
   }
 };
+
+export default { logger };

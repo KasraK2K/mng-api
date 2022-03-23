@@ -38,7 +38,7 @@ class RequestMiddleware extends Middleware {
     const ignoreToken: string[] = ["login", "logout", "shake-hand", "swagger"];
     const endpoint = req.originalUrl;
     const params = req.body;
-    res.locals.params = params;
+    _.assign(res.locals.params, params);
 
     const checkApiKey = !ignoreApikeys.some((ignoreApiKey) => endpoint.includes(ignoreApiKey));
     const checkToken = !ignoreToken.some((ignoreTkn) => endpoint.includes(ignoreTkn));

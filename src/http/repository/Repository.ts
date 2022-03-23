@@ -3,6 +3,9 @@ import { Pool, PoolClient } from "pg";
 import { LoggerEnum } from "../../common/enums/logger.enum";
 import _ from "lodash";
 
+// `SELECT $1::text, $2::integer, $3::boolean FROM $4 WHERE $5`, [1, 2, 3, 4, 5];
+// `INSERT INTO $1 (id, name, email, access) VALUES ($2, $3, $4, $5) RETURNING id`, [1, 2, 3, 4, 5];
+
 class Repository {
   protected async readTable(args: IReadTable, source: Pool = pg.pool_main): Promise<any> {
     return new Promise(async (resolve, reject) => {
@@ -82,11 +85,11 @@ class Repository {
 
   private static sanitizeArgs(args: IReadTable): IReadTable {
     args.fields = args.fields || "*";
-    args.where = args.where && args.where.length ? ` where ${args.where} ` : "";
+    args.where = args.where && args.where.length ? ` WHERE ${args.where} ` : "";
     args.table = args.table || "";
-    args.order = args.order && args.order.length ? ` order by ${args.order} ` : "";
-    args.limit = args.limit && Number(args.limit) ? ` limit ${args.limit} ` : "";
-    args.group = args.group && args.group.length ? ` group by ${args.group} ` : "";
+    args.order = args.order && args.order.length ? ` ORDER BY ${args.order} ` : "";
+    args.limit = args.limit && Number(args.limit) ? ` LIMIT ${args.limit} ` : "";
+    args.group = args.group && args.group.length ? ` GROUP BY ${args.group} ` : "";
     return args;
   }
 
@@ -100,6 +103,42 @@ class Repository {
           client
             .query(query)
             .then((qres) => {
+              resolve(qres);
+            })
+            .catch((err) => {
+              logger(`{red} error executeQuery {reset}`);
+              logger(`{red} ${query} {reset}`);
+              logger(`{red}${err.stack}{reset}`, LoggerEnum.ERROR);
+              reject(err);
+            })
+            .finally(() => {
+              client.release();
+            });
+        })
+        .catch((err) => {
+          logger(`{red} error executeQuery {reset}`);
+          logger(`{red}${err.stack}{reset}`, LoggerEnum.ERROR);
+          reject(err);
+        });
+    });
+  }
+
+  protected executeQueryWithParameter(args: {
+    query: string;
+    source: Pool;
+    parameter: string[];
+    omits: string[];
+  }): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      const { source, query = "", parameter = [], omits = [] } = args;
+
+      await source
+        .connect()
+        .then((client: PoolClient) => {
+          client
+            .query(query, parameter)
+            .then((qres) => {
+              omits && omits.length && (qres.rows = _.omit(qres.rows, omits));
               resolve(qres);
             })
             .catch((err) => {

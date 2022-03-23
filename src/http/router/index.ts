@@ -16,6 +16,7 @@ import informationController from "../controller/InformationController";
 import mngUserController from "../controller/MngUserController";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "../../swagger";
+import venueController from "../controller/VenueController";
 
 const swaggerOptions = {
   explorer: true,
@@ -29,9 +30,13 @@ const router = express.Router();
 router.post("/", homeController.index);
 router.post("/shake-hand", informationController.info);
 
-// ─── USER ───────────────────────────────────────────────────────────────────────
+// ─── MANAGER USERS ──────────────────────────────────────────────────────────────
 router.post("/mng-users/list", mngUserController.list);
 router.post("/mng-users/upsert", mngUserController.upsert);
+
+// ─── VENUES ─────────────────────────────────────────────────────────────────────
+router.post("/venues/list", venueController.list);
+router.post("/venues/upsert", venueController.upsert);
 
 // ─── AUTHORIZATION ──────────────────────────────────────────────────────────────
 router.post("/login", authController.login);

@@ -8,9 +8,9 @@ database:
   postgres:
     main:
       user: "postgres"
-      host: "104.236.243.125"
+      host: "localhost"
       database: "Embargo"
-      password: "developmentaccess"
+      password: "Emb@rg0Devel0pMent@dv"
       port: 5432
       idleTimeoutMillis: 5000
       connectionTimeoutMillis: 5000
