@@ -1,12 +1,12 @@
 if (process.env.NODE_ENV === "development") {
   import("jsonwebtoken")
     .then(({ default: jwt }) => {
-      const sample_jwt = jwt.sign({ user_id: 123 }, process.env.JWT_SECRET ?? "", {
+      const jwt_token = jwt.sign({ user_id: 123 }, process.env.JWT_SECRET ?? "", {
         expiresIn: "365d",
       });
       const api_keys = process.env.API_KEYS?.split(",");
       console.log({
-        sample_jwt,
+        jwt_token,
         api_keys,
         isServer: JSON.parse(process.env.IS_ON_SERVER || "false"),
       });

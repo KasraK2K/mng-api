@@ -71,7 +71,7 @@ class Repository {
 
       keys.push(` "${key}" `); // ['name', 'surname', 'address']
       values.push(val); // ['kasra','karami']
-      updates.push(` "${key}" = '${val}' `); // [` name = 'kasra' `, ` surname = 'karami' `]
+      updates.push(` "${key}" = ${val} `); // [` name = 'kasra' `, ` surname = 'karami' `]
     });
 
     if (Number(data[checking_data_field]) === 0) {

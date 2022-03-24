@@ -54,7 +54,10 @@ class VenueRepository extends Repository {
 
       await super
         .executeQuery({ query, source: pg.pool_main })
-        .then((response) => resolve({ result: true, data: response.rows }))
+        .then((response) => {
+          const list: Record<string, any>[] = response.rows;
+          return resolve(list);
+        })
         .catch((err) => {
           logger(`{red}${err.stack}{reset}`, LoggerEnum.ERROR);
           return reject({ result: false, err });
