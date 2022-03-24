@@ -3,9 +3,10 @@ import venueRepository from "../repository/VenueRepository";
 import { beaconValidator } from "../validator/objectValidator";
 
 class VenueLogic extends Logic {
-  public async list(args: Record<string, any> = {}): Promise<any> {
+  public list(args: Record<string, any>): Promise<any> {
     return new Promise(async (resolve, reject) => {
       const value = objectValidator(args, objectSchema.venue.list);
+      console.log({ value });
       if ("errors" in value) return reject({ result: false, error_code: 3002, errors: value.errors });
       else
         await venueRepository
@@ -15,7 +16,7 @@ class VenueLogic extends Logic {
     });
   }
 
-  public async upsert(args: Record<string, any> = {}): Promise<any> {
+  public upsert(args: Record<string, any> = {}): Promise<any> {
     return new Promise(async (resolve, reject) => {
       const value = objectValidator(args.data, objectSchema.venue.upsert);
 

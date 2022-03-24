@@ -17,6 +17,8 @@ import mngUserController from "../controller/MngUserController";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "../../swagger";
 import venueController from "../controller/VenueController";
+import loyaltySchemeController from "../controller/LoyaltySchemeController";
+import offerController from "../controller/OfferController";
 
 const swaggerOptions = {
   explorer: true,
@@ -37,6 +39,14 @@ router.post("/mng-users/upsert", mngUserController.upsert);
 // ─── VENUES ─────────────────────────────────────────────────────────────────────
 router.post("/venues/list", venueController.list);
 router.post("/venues/upsert", venueController.upsert);
+
+// ─── LOYALTY SCHEME ─────────────────────────────────────────────────────────────
+router.post("/schemes/list", loyaltySchemeController.list);
+router.post("/schemes/upsert", loyaltySchemeController.upsert);
+
+// ─── LOYALTY SCHEME ─────────────────────────────────────────────────────────────
+router.post("/offers/list", offerController.list);
+router.post("/offers/upsert", offerController.upsert);
 
 // ─── AUTHORIZATION ──────────────────────────────────────────────────────────────
 router.post("/login", authController.login);

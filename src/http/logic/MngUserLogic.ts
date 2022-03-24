@@ -3,7 +3,7 @@ import mngUserRepository from "../repository/MngUserRepository";
 import { hashGen } from "./../../common/functions/bcrypt";
 
 class MngUserLogic extends Logic {
-  public async list(args: Record<string, any> = {}): Promise<any> {
+  public list(args: Record<string, any>): Promise<any> {
     return new Promise(async (resolve, reject) => {
       const value = objectValidator(args ?? {}, objectSchema.manager.list);
 
@@ -16,7 +16,7 @@ class MngUserLogic extends Logic {
     });
   }
 
-  public async upsert(args: Record<string, any> = {}): Promise<any> {
+  public upsert(args: Record<string, any> = {}): Promise<any> {
     return new Promise(async (resolve, reject) => {
       /* REVIEW Use to log with mongodb */
       // const portal_user_id: number = args.portal_user_id || -2;

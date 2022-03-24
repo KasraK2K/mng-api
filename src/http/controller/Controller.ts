@@ -31,6 +31,7 @@ class Controller {
       env: process.env.NODE_ENV,
       mode,
       result,
+      count: data.length,
       data,
     };
     // logger(response, LoggerEnum.REQUEST);

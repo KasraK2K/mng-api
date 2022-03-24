@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import { compareHash } from "../../common/functions/bcrypt";
 
 class UserLogic extends Logic {
-  async login(params: Record<string, any>): Promise<any> {
+  public login(params: Record<string, any>): Promise<any> {
     return new Promise(async (resolve, reject) => {
       const value = objectValidator(params, objectSchema.login);
       if ("errors" in value) return reject({ result: false, errors: value.errors });

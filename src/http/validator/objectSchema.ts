@@ -1,8 +1,14 @@
 export const objectSchema = {
+  // ────────────────────────────────────────────────────────────
+  //   :::::: L O G I N : :  :   :    :     :        :          :
+  // ────────────────────────────────────────────────────────────
   login: {
     email: { type: "string", force_type: true },
     password: { type: "string", force_type: true },
   },
+  // ────────────────────────────────────────────────────────────────
+  //   :::::: M A N A G E R : :  :   :    :     :        :          :
+  // ────────────────────────────────────────────────────────────────
   manager: {
     list: {
       id: { type: "int" },
@@ -16,9 +22,12 @@ export const objectSchema = {
       password: { type: "string", min_length: 5, cut_at_max: 50 },
     },
   },
+  // ────────────────────────────────────────────────────────────
+  //   :::::: V E N U E : :  :   :    :     :        :          :
+  // ────────────────────────────────────────────────────────────
   venue: {
     list: {
-      field: { type: "string", force_type: true },
+      fields: { type: "string", force_type: true },
       search: { type: "object", default: {} },
     },
     upsert: {
@@ -50,6 +59,57 @@ export const objectSchema = {
       beacons: { type: "array", force_type: true, min_length: 1 },
       scheme_ids: { type: "array", force_type: true, min_length: 1 },
       categories: { type: "array", force_type: true, min_length: 1 },
+    },
+  },
+  // ────────────────────────────────────────────────────────────────
+  //   :::::: S C H E M E S : :  :   :    :     :        :          :
+  // ────────────────────────────────────────────────────────────────
+  scheme: {
+    list: {
+      fields: { type: "string", force_type: true },
+      search: { type: "object", default: {} },
+    },
+    upsert: {
+      id: { type: "int" },
+      point_cycle: { type: "int", min_value: 1 },
+      name: { type: "string", force_type: true, min_length: 5, cut_at_max: 100 },
+      active: { type: "boolean", default: false },
+      is_group: { type: "boolean", default: false },
+      description: { type: "string", force_type: true, min_length: 5, cut_at_max: 200 },
+      colour1: { type: "string", cut_at_max: 10 },
+      colour2: { type: "string", cut_at_max: 10 },
+      text_colour1: { type: "string", cut_at_max: 10 },
+      text_colour2: { type: "string", cut_at_max: 10 },
+    },
+  },
+  // ────────────────────────────────────────────────────────────
+  //   :::::: O F F E R : :  :   :    :     :        :          :
+  // ────────────────────────────────────────────────────────────
+  offer: {
+    list: {
+      fields: { type: "string", force_type: true },
+      search: { type: "object", default: {} },
+    },
+    upsert: {
+      id: { type: "int" },
+      venue_id: { type: "int" },
+      description: { type: "string", force_type: true, min_length: 5, cut_at_max: 100 },
+      active: { type: "boolean", default: false },
+      hidden: { type: "boolean", default: false },
+      cooldown: { type: "boolean", default: false },
+      uses: { type: "int", default: 1 },
+      start_time: { type: "string", cut_at_max: 5 },
+      end_time: { type: "string", cut_at_max: 5 },
+      start_date: { type: "string", cut_at_max: 10 },
+      end_date: { type: "string", cut_at_max: 10 },
+      required_initial_points: { type: "int" },
+      required_separate_points: { type: "int" },
+      scheme_id: { type: "int" },
+      condition: { type: "string", cut_at_max: 250 },
+      time_tags: { type: "array", force_type: true },
+      available_days: { type: "array", force_type: true },
+      type_categories: { type: "type_categories", force_type: true },
+      teaser: { type: "string", cut_at_max: 40 },
     },
   },
 };

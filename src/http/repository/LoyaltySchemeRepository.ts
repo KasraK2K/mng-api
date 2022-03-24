@@ -1,126 +1,61 @@
-// const schemeList = async (args={}) =>  {
+import Repository from "./Repository";
+import { LoggerEnum } from "../../common/enums/logger.enum";
+import _ from "lodash";
 
-//     return new Promise(async (resolve, reject) => {
-//         const list = []
+class LoyaltySchemeRepository extends Repository {
+  private collection = "venues";
 
-//         // > ***** start generate where string
-//         const where = []
-//         const searchObj = args.search ?? {}
+  list(args: Record<string, any>): Promise<Record<string, any>> {
+    return new Promise(async (resolve, reject) => {
+      // ─── START: GENERATE WHERE STRING ────────────────────────────────
+      const where: string[] = [];
+      if (_.keys(args.search).length) {
+        if (args.search.id) where.push(` id = ${parseInt(args.search.id) || -1} `);
+        if (args.search.name) where.push(`name ILIKE '%${args.search.name}%' `);
+      }
 
-//         const searchSchemeId = helpers.getValue({obj:searchObj, field:'id', default:-1})
-//         const searchName = helpers.getValue({obj:searchObj, field:'name', type:"string", default:""})
+      const whereStr = where.length > 0 ? " WHERE " + where.join(" AND ") : "";
+      // ─── END: GENERATE WHERE STRING ──────────────────────────────────
 
-//         if (searchSchemeId>0) where.push(` id = ${searchSchemeId} `)
-//         if (searchName.length>0) where.push(` name ilike '%${searchName}%' `)
+      // ─── START: GENERATE FIELD STRING ────────────────────────────────
+      let fields = ` id, name, "isGroup" AS is_group, "pointsCycle" AS point_cycle, active, logo, image,
+        colour1, colour2, "textColour1" AS text_color1, "textColour2"as text_color2, rtimestamp, description
+      `;
 
-//         const whereStr =  where.length>0 ? ' where '+where.join(' and '):''
-//         // < ***** end generate where string
+      if ("fields" in args) {
+        if (args.fields == "summary") {
+          fields = ` id, name, active, "pointsCycle" AS point_cycle, "isGroup" AS is_group, rtimestamp  `;
+        }
+      }
+      // ─── END: GENERATE FIELD STRING ──────────────────────────────────
 
-//         // > ***** start generate field string
-//         let fields = ` id, name, "isGroup" as is_group, "pointsCycle" as point_cycle, active, logo, image,
-//              colour1, colour2, "textColour1" as text_color1, "textColour2"as text_color2, rtimestamp, description
-//         `
+      const query = ` SELECT ${fields} FROM "LoyaltySchemes" ${whereStr} ORDER BY id DESC limit 200`;
 
-//         if ('fields' in args){
-//             if (args.fields == 'summary') {
-//                 fields =  ` id, name, active,  "pointsCycle" as point_cycle, "isGroup" as is_group, rtimestamp  `
-//             }
-//         }
-//         // < ***** end generate field string
+      await super
+        .executeQuery({ query, source: pg.pool_main })
+        .then((response) => {
+          const list: Record<string, any>[] = response.rows;
+          return resolve(list);
+        })
+        .catch((err) => {
+          logger(`{red}${err.stack}{reset}`, LoggerEnum.ERROR);
+          return reject({ result: false, err });
+        });
+    });
+  }
 
-//         const query = `
-//                 SELECT
-//                    ${fields}
-//                 FROM "LoyaltySchemes"
-//                 ${whereStr}
-//                 ORDER BY id desc limit 200
-//         `
+  upsert(args: Record<string, any>, sql_schema: Record<string, any>) {
+    return new Promise(async (resolve, reject) => {
+      const query = await super.getUpsertQuery(args, sql_schema);
+      await super
+        .executeQuery({ query, source: pg.pool_main })
+        .then((qres) => {
+          const result = qres.rows;
+          return resolve(result);
+        })
+        .catch((err) => reject(err));
+    });
+  }
+}
 
-//         await executeQuery({source:'prod', query:query, function_requesting:"schemeList"})
-//         .then( (qres) => {
-//             for (let row of qres.qres.rows) {
-//                 list.push(row);
-//             }
-//             resolve ({result:true, data:list})
-//         })
-//         .catch(err => {  reject({result:false}) })
-//     })
-// }
-
-// const schemeAddEdit = async (args={}) =>  {
-
-//     return new Promise(async (resolve, reject) => {
-
-//         const portal_user_id = args.portal_user_id || -2
-//         const portal_user_name = args.portal_user_name || '-'
-
-//         const validationSchema = {
-//             id:{type:"int"},
-//             point_cycle:{type:"int", min_value:1},
-//             name:{type:"string", force_type:true , min_length:5 , cut_at_max:100},
-//             active:{type:"boolean", default: false},
-//             is_group:{type:"boolean", default: false},
-//             description:{type:"string", force_type:true , min_length:5 , cut_at_max:200},
-//             colour1:{type:"string", cut_at_max:10},
-//             colour2:{type:"string", cut_at_max:10},
-//             text_colour1:{type:"string", cut_at_max:10},
-//             text_colour2:{type:"string", cut_at_max:10},
-//         }
-//         const value = Validator.validate(args.data ?? {},validationSchema,{})
-//         value.scheme = ''
-//         console.log({vvvv:value});
-//     //logo, image
-
-//         if ('errors' in value) {
-
-//             reject({result:false, error_code:3011, error_message:value.errors})
-//             return
-//         }
-//         else {
-
-//             const sql_schema = {
-//                 table_name: `"LoyaltySchemes"`,
-//                 checking_data_field: 'id',
-//                 table_id: 'id' ,
-//                 returning: 'id',
-//                 fields:{
-//                     name:{ field:'name'},
-//                     pointsCycle:{ field:'point_cycle'},
-//                     active:{ field:'active' } ,
-//                     isGroup:{ field:'is_group'} ,
-//                     description:{ field:'description' , is_string:true} ,
-//                     colour1:{ field:'colour1'} ,
-//                     colour2:{ field:'colour2'} ,
-//                     textColour1:{ field:'text_colour1'} ,
-//                     textColour2:{ field:'text_colour2'} ,
-//                     scheme:{field:'scheme'}
-//                 }
-//             }
-
-//             const query = getAddEditQuery(value , sql_schema)
-
-//             await executeQuery({source:'prod', query:query})
-//             .then( (qres) => {
-//                 const returnData = {}
-//                 if ((value.id || 0) == 0){
-//                     const lastID = qres.qres.rows[0].id
-//                     returnData.saved_id = lastID
-//                     console.log({lastID});
-//                 //     addLog({des:`venue (${value.name}) created by ${portal_user_name}`, venue_id:lastID, user_id:portal_user_id})
-//                 }
-//                 else {
-//                     returnData.saved_id = venue.id
-//                 }
-
-//                 resolve({result:true, data:returnData})
-//             })
-//             .catch(err => {
-//                 // helpers.lg(`{red}error venueAdd function{reset}`)
-//                 helpers.lg(`{red}${err.stack}{reset}`)
-//                 reject({result:false})
-//             })
-
-//         }
-
-//     })
-// }
+export default new LoyaltySchemeRepository();
