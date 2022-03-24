@@ -20,12 +20,12 @@ class VenueRepository extends Repository {
         `);
         }
 
-        if ((args.search.beacon || "").length > 0) where.push(` v.beacons like '%${args.search.beacon}%' `);
+        if ((args.search.beacon || "").length > 0) where.push(` v.beacons LIKE '%${args.search.beacon}%' `);
 
         if (args.search.id) where.push(` v.id = ${parseInt(args.search.id) || -1} `);
       }
 
-      const whereStr = where.length > 0 ? " where " + where.join(" and ") : "";
+      const whereStr = where.length > 0 ? " WHERE " + where.join(" AND ") : "";
       // ──────────────────────────────── END: GENERATE WHERE STRING ─────
 
       // ────────────────────────────── START: GENERATE FIELD STRING ─────
@@ -39,7 +39,7 @@ class VenueRepository extends Repository {
 
       if ("fields" in args) {
         if (args.fields == "summary") {
-          fields = `v.id, v.active, v."loyaltySchemeID" as scheme_id, v.released , v.name as venue_name , v.country , v.beacons`;
+          fields = `v.id, v.active, v."loyaltySchemeID" AS scheme_id, v.released, v.name AS venue_name, v.country, v.beacons`;
         }
       }
       // ──────────────────────────────── END: GENERATE FIELD STRING ─────
