@@ -15,5 +15,5 @@ process.on("uncaughtException", (err) => {
   process.exit(1);
 });
 
-const server = new Application({ port: 6000 });
+const server = new Application({ port: 6300 });
 server.start();

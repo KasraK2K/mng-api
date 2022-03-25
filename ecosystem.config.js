@@ -34,14 +34,14 @@ module.exports = {
       env_production: {
         NODE_ENV: "production",
         JWT_SECRET: "secret",
-        PORT: "6000",
+        PORT: "6300",
       },
 
       // development environment
       env_development: {
         NODE_ENV: "development",
         JWT_SECRET: "secret",
-        PORT: "6000",
+        PORT: "6300",
       },
     },
   ],

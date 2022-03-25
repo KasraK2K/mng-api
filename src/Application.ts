@@ -24,7 +24,7 @@ const corsConfig: ICorsConfig = config.get("cors");
  * // This is an example of how to use the Application class.
  *
  * const server = new Application();
- * server.start({ port: 3000 });
+ * server.start({ port: 6300 });
  * ```
  *
  * @category Application
