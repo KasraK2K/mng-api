@@ -39,6 +39,13 @@ export const logger = (text: any, type = LoggerEnum.INFO) => {
     text = JSON.stringify(text, null, 2);
   }
 
+  const logText = text
+    .replace(/{green}/g, "")
+    .replace(/{blue}/g, "")
+    .replace(/{yellow}/g, "")
+    .replace(/{red}/g, "")
+    .replace(/{reset}/g, "");
+
   text = text
     .replace(/{green}/g, "\u001b[32;1m")
     .replace(/{blue}/g, "\u001b[34;1m")
@@ -46,7 +53,37 @@ export const logger = (text: any, type = LoggerEnum.INFO) => {
     .replace(/{red}/g, "\x1b[31m")
     .replace(/{reset}/g, "\x1b[0m");
 
-  console.log("-" + text);
+  !applicationConfig.logOnMongo && console.log("-" + text);
+
+  // ─────────────────────────────────────────────── START: SAVE LOG ON MONGODB ─────
+  applicationConfig.logOnMongo &&
+    (async () => {
+      await mongo
+        .collection(`${type}_logs`)
+        .insertOne({
+          text: logText,
+          time: now.toUTCString(),
+          process_id,
+        })
+        .then(() => console.log("-" + text))
+        .catch((err) => console.log("Logger mongodb insert:", err.stack));
+    })();
+  // ────────────────────────────────────────────────────────────────────────────────
+  applicationConfig.logOnMongo &&
+    ![LoggerEnum.REQUEST].includes(type) &&
+    (async () => {
+      await mongo
+        .collection("all_logs")
+        .insertOne({
+          type,
+          text: logText,
+          time: now.toUTCString(),
+          process_id,
+        })
+        .then(() => console.log("-" + text))
+        .catch((err) => console.log("Logger mongodb insert:", err.stack));
+    })();
+  // ───────────────────────────────────────────────── END: SAVE LOG ON MONGODB ─────
 
   if (isServer) {
     fs.appendFile(path + type + ".log", `${date} ${time} ${text} \n`, (err) => console.log(err));

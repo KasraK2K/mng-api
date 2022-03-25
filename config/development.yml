@@ -1,10 +1,13 @@
 mode: development
 
+application:
+  logOnMongo: false
+
 database:
   mongodb:
-    name: "node-starter"
+    name: "mng_api_development"
     default_collection: "default"
-    uri: "mongodb://0.0.0.0:27017/node-starter"
+    uri: "mongodb://0.0.0.0:27017/mng_api_development"
   postgres:
     main:
       user: "postgres"

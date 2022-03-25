@@ -2,8 +2,8 @@ import { getError } from "../../common/functions/errors";
 import { IResGen, IResGenOptions, IErrGenOptions } from "../../common/interfaces/information";
 import config from "config";
 import { IApplicationConfig } from "../../../config/config.interface";
-// import { LoggerEnum } from "../../common/enums/logger.enum";
-// import _ from "lodash";
+import { LoggerEnum } from "../../common/enums/logger.enum";
+import _ from "lodash";
 
 const applicationConfig: IApplicationConfig = config.get("application");
 const mode: string = config.get("mode");
@@ -15,7 +15,7 @@ class Controller {
 
   public resGen(options: IResGen) {
     const { res, status } = options;
-    // logger(`{green}${JSON.stringify(_.omit(res.locals.params, ["process_id"]), null, 2)}{reset}`, LoggerEnum.REQUEST);
+    logger(`{green}${JSON.stringify(_.omit(res.locals.params, ["process_id"]), null, 2)}{reset}`, LoggerEnum.REQUEST);
     return options.result
       ? res.status(status || 200).json(Controller.responseGenerator(options as IResGenOptions))
       : res.status(status || 500).json(Controller.errorGenerator(options as IErrGenOptions));
@@ -34,7 +34,7 @@ class Controller {
       count: data.length,
       data,
     };
-    // logger(response, LoggerEnum.REQUEST);
+    logger(response, LoggerEnum.REQUEST);
     return response;
   }
 
@@ -53,7 +53,7 @@ class Controller {
       error_message: error.message ?? [],
       error_user_messages,
     };
-    // logger(response, LoggerEnum.REQUEST);
+    logger(response, LoggerEnum.REQUEST);
     return response;
   }
 }

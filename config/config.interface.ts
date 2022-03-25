@@ -13,6 +13,7 @@ export interface IApplicationConfig {
   front_version: string;
   portal_version: string;
   logPath: string;
+  logOnMongo: boolean;
 }
 
 // ──────────────────────────────────────────────────────────────── DATABASES ─────
