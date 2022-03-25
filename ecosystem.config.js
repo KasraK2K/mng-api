@@ -33,14 +33,14 @@ module.exports = {
       // production environment
       env_production: {
         NODE_ENV: "production",
-        JWT_SECRET: "secret",
+        JWT_SECRET: "Embargo_mnG_V2.1_Emb@rgoL!m!ted@!AllManagementSaltsPr0d0cti0n",
         PORT: "6300",
       },
 
       // development environment
       env_development: {
         NODE_ENV: "development",
-        JWT_SECRET: "secret",
+        JWT_SECRET: "Embargo_mnG_V2.1_Emb@rgoL!m!ted@!AllManagementSaltsDevel0pment",
         PORT: "6300",
       },
     },
