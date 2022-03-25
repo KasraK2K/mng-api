@@ -6,7 +6,6 @@ class VenueLogic extends Logic {
   public list(args: Record<string, any>): Promise<any> {
     return new Promise(async (resolve, reject) => {
       const value = objectValidator(args, objectSchema.venue.list);
-      console.log({ value });
       if ("errors" in value) return reject({ result: false, error_code: 3002, errors: value.errors });
       else
         await venueRepository

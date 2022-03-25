@@ -47,8 +47,6 @@ class OfferRepository extends Repository {
         ORDER BY id DESC limit 200
       `;
 
-      console.log(query);
-
       await super
         .executeQuery({ query, source: pg.pool_main })
         .then((response) => {
