@@ -12,17 +12,17 @@
 module.exports = {
   apps: [
     {
-      name: "mng-api",
+      name: "mng",
       log_date_format: "YYYY-MM-DD HH:mm Z",
-      script: process.env.NODE_ENV === "production" ? "build/index.js" : "src/index.ts",
-      autorestart: true,
-      watch: true,
+      script: "dist/ssr/www/index.js",
+      autorestart: false,
+      watch: false,
       time: true,
       instances: "max",
       exec_mode: "cluster",
-      error_file: "/var/pm2-logs/dev/err.log",
-      out_file: "/var/pm2-logs/dev/out.log",
-      log_file: "/var/pm2-logs/dev/combined.log",
+      error_file: "/var/pm2-logs/dev/api/err.log",
+      out_file: "/var/pm2-logs/dev/api/out.log",
+      log_file: "/var/pm2-logs/dev/api/combined.log",
 
       // default variables
       env: {
