@@ -6,9 +6,9 @@ export const objectSchema = {
     email: { type: "string", force_type: true },
     password: { type: "string", force_type: true },
   },
-  // ────────────────────────────────────────────────────────────────
-  //   :::::: M A N A G E R : :  :   :    :     :        :          :
-  // ────────────────────────────────────────────────────────────────
+  // ──────────────────────────────────────────────────────────────────────────
+  //   :::::: M A N A G E R   U S E R : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────
   manager: {
     list: {
       id: { type: "int" },
@@ -110,6 +110,20 @@ export const objectSchema = {
       available_days: { type: "array", force_type: true },
       type_categories: { type: "type_categories", force_type: true },
       teaser: { type: "string", cut_at_max: 40 },
+    },
+  },
+  // ──────────────────────────────────────────────────────────────────
+  //   :::::: A P P   U S E R : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────
+  appUser: {
+    list: {
+      search: { type: "object", default: {} },
+    },
+    details: {
+      id: { type: "int", force_type: true },
+    },
+    rewards: {
+      user_id: { type: "int", force_type: true },
     },
   },
 };

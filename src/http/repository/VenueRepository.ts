@@ -3,7 +3,7 @@ import { LoggerEnum } from "../../common/enums/logger.enum";
 import _ from "lodash";
 
 class VenueRepository extends Repository {
-  private collection = "venues";
+  private collection = "Venues";
 
   list(args: Record<string, any>): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {

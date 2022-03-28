@@ -19,6 +19,7 @@ import swaggerDocument from "../../swagger";
 import venueController from "../controller/VenueController";
 import loyaltySchemeController from "../controller/LoyaltySchemeController";
 import offerController from "../controller/OfferController";
+import appUserController from "../controller/AppUserController";
 
 const swaggerOptions = {
   explorer: true,
@@ -47,6 +48,11 @@ router.post("/schemes/upsert", loyaltySchemeController.upsert);
 // ─── LOYALTY SCHEME ─────────────────────────────────────────────────────────────
 router.post("/offers/list", offerController.list);
 router.post("/offers/upsert", offerController.upsert);
+
+// ─── APP USER ───────────────────────────────────────────────────────────────────
+router.post("/app-users/list", appUserController.list);
+router.post("/app-users/details", appUserController.details);
+router.post("/app-users/rewards", appUserController.rewards);
 
 // ─── AUTHORIZATION ──────────────────────────────────────────────────────────────
 router.post("/login", authController.login);
