@@ -1,5 +1,8 @@
 import Logic from "./Logic";
 import appUserRepository from "../repository/AppUserRepository";
+import pointRepository from "../repository/PointRepository";
+import claimRepository from "../repository/ClaimRepository";
+import rewardRepository from "../repository/RewardRepository";
 
 class AppUserLogic extends Logic {
   public list(args: Record<string, any>): Promise<any> {
@@ -31,7 +34,7 @@ class AppUserLogic extends Logic {
       const value = objectValidator(args, objectSchema.appUser.rewards);
       if ("errors" in value) return reject({ result: false, error_code: 3002, errors: value.errors });
       else
-        await appUserRepository
+        await rewardRepository
           .rewards(args)
           .then((response) => resolve({ result: true, data: response }))
           .catch((err) => reject({ result: false, err }));
@@ -43,7 +46,7 @@ class AppUserLogic extends Logic {
       const value = objectValidator(args, objectSchema.appUser.claims);
       if ("errors" in value) return reject({ result: false, error_code: 3002, errors: value.errors });
       else
-        await appUserRepository
+        await claimRepository
           .claims(args)
           .then((response) => resolve({ result: true, data: response }))
           .catch((err) => reject({ result: false, err }));
@@ -55,7 +58,7 @@ class AppUserLogic extends Logic {
       const value = objectValidator(args, objectSchema.appUser.points);
       if ("errors" in value) return reject({ result: false, error_code: 3002, errors: value.errors });
       else
-        await appUserRepository
+        await pointRepository
           .points(args)
           .then((response) => resolve({ result: true, data: response }))
           .catch((err) => reject({ result: false, err }));

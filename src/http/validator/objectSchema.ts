@@ -122,12 +122,18 @@ export const objectSchema = {
     details: {
       id: { type: "int", force_type: true },
     },
+
+    // reward repository
     rewards: {
       user_id: { type: "int", force_type: true },
     },
+
+    // claim repository
     claims: {
       user_id: { type: "int", force_type: true },
     },
+
+    // point repository
     points: {
       user_id: { type: "int", force_type: true },
     },
