@@ -31,7 +31,7 @@ class AppUserLogic extends Logic {
 
   public rewards(args: Record<string, any>): Promise<any> {
     return new Promise(async (resolve, reject) => {
-      const value = objectValidator(args, objectSchema.appUser.rewards);
+      const value = objectValidator(args, objectSchema.rewards);
       if ("errors" in value) return reject({ result: false, error_code: 3002, errors: value.errors });
       else
         await rewardRepository
@@ -43,7 +43,7 @@ class AppUserLogic extends Logic {
 
   public claims(args: Record<string, any>): Promise<any> {
     return new Promise(async (resolve, reject) => {
-      const value = objectValidator(args, objectSchema.appUser.claims);
+      const value = objectValidator(args, objectSchema.claims);
       if ("errors" in value) return reject({ result: false, error_code: 3002, errors: value.errors });
       else
         await claimRepository
@@ -55,7 +55,7 @@ class AppUserLogic extends Logic {
 
   public points(args: Record<string, any>): Promise<any> {
     return new Promise(async (resolve, reject) => {
-      const value = objectValidator(args, objectSchema.appUser.points);
+      const value = objectValidator(args, objectSchema.points);
       if ("errors" in value) return reject({ result: false, error_code: 3002, errors: value.errors });
       else
         await pointRepository

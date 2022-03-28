@@ -122,21 +122,24 @@ export const objectSchema = {
     details: {
       id: { type: "int", force_type: true },
     },
-
-    // reward repository
-    rewards: {
-      user_id: { type: "int", force_type: true },
-    },
-
-    // claim repository
-    claims: {
-      user_id: { type: "int", force_type: true },
-    },
-
-    // point repository
-    points: {
-      user_id: { type: "int", force_type: true },
-    },
+  },
+  // ──────────────────────────────────────────────────────────────
+  //   :::::: R E W A R D : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────
+  rewards: {
+    user_id: { type: "int", force_type: true },
+  },
+  // ────────────────────────────────────────────────────────────
+  //   :::::: C L A I M : :  :   :    :     :        :          :
+  // ────────────────────────────────────────────────────────────
+  claims: {
+    user_id: { type: "int", force_type: true },
+  },
+  // ────────────────────────────────────────────────────────────
+  //   :::::: P O I N T : :  :   :    :     :        :          :
+  // ────────────────────────────────────────────────────────────
+  points: {
+    user_id: { type: "int", force_type: true },
   },
 };
 
