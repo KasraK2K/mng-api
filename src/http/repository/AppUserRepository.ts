@@ -53,7 +53,7 @@ class AppUserRepository extends Repository {
           },
           pg.pool_main
         )
-        .then((response) => resolve({ result: true, data: response }))
+        .then((response) => resolve(response))
         .catch((err) => {
           logger(`{red}Error at getting AppUserDetails{reset}`, LoggerEnum.ERROR);
           logger(`{red}${err.stack}{reset}`, LoggerEnum.ERROR);
@@ -82,7 +82,7 @@ class AppUserRepository extends Repository {
 
       await super
         .executeQuery({ source: pg.pool_main, query })
-        .then((response) => resolve({ count: response.rowCount, list: response.rows }))
+        .then((response) => resolve(response.rows))
         .catch((err) => {
           logger(`{red}Error at getting UserRewards{reset}`, LoggerEnum.ERROR);
           logger(`{red}${err.stack}{reset}`, LoggerEnum.ERROR);
@@ -106,7 +106,7 @@ class AppUserRepository extends Repository {
 
       await super
         .executeQuery({ source: pg.pool_main, query })
-        .then((response) => resolve({ count: response.rowCount, list: response.rows }))
+        .then((response) => resolve(response.rows))
         .catch((err) => {
           logger(`{red}Error at getting UserClaims{reset}`, LoggerEnum.ERROR);
           logger(`{red}${err.stack}{reset}`, LoggerEnum.ERROR);
@@ -130,7 +130,7 @@ class AppUserRepository extends Repository {
 
       await super
         .executeQuery({ source: pg.pool_main, query })
-        .then((response) => resolve({ count: response.rowCount, list: response.rows }))
+        .then((response) => resolve(response.rows))
         .catch((err) => {
           logger(`{red}Error at getting UserPoints{reset}`, LoggerEnum.ERROR);
           logger(`{red}${err.stack}{reset}`, LoggerEnum.ERROR);
