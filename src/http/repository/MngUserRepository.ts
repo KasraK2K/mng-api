@@ -2,8 +2,6 @@ import Repository from "./Repository";
 import { LoggerEnum } from "../../common/enums/logger.enum";
 
 class MngUserRepository extends Repository {
-  private collection = "mng_users";
-
   list(args: Record<string, any>): Promise<Record<string, any>[]> {
     return new Promise(async (resolve, reject) => {
       const whereArray = [];
