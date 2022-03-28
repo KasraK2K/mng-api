@@ -53,6 +53,8 @@ router.post("/offers/upsert", offerController.upsert);
 router.post("/app-users/list", appUserController.list);
 router.post("/app-users/details", appUserController.details);
 router.post("/app-users/rewards", appUserController.rewards);
+router.post("/app-users/claims", appUserController.claims);
+router.post("/app-users/points", appUserController.points);
 
 // ─── AUTHORIZATION ──────────────────────────────────────────────────────────────
 router.post("/login", authController.login);

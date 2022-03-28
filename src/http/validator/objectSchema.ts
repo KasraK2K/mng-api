@@ -125,6 +125,12 @@ export const objectSchema = {
     rewards: {
       user_id: { type: "int", force_type: true },
     },
+    claims: {
+      user_id: { type: "int", force_type: true },
+    },
+    points: {
+      user_id: { type: "int", force_type: true },
+    },
   },
 };
 

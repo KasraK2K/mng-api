@@ -37,6 +37,30 @@ class AppUserLogic extends Logic {
           .catch((err) => reject({ result: false, err }));
     });
   }
+
+  public claims(args: Record<string, any>): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      const value = objectValidator(args, objectSchema.appUser.claims);
+      if ("errors" in value) return reject({ result: false, error_code: 3002, errors: value.errors });
+      else
+        await appUserRepository
+          .claims(args)
+          .then((response) => resolve({ result: true, data: response }))
+          .catch((err) => reject({ result: false, err }));
+    });
+  }
+
+  public points(args: Record<string, any>): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      const value = objectValidator(args, objectSchema.appUser.points);
+      if ("errors" in value) return reject({ result: false, error_code: 3002, errors: value.errors });
+      else
+        await appUserRepository
+          .points(args)
+          .then((response) => resolve({ result: true, data: response }))
+          .catch((err) => reject({ result: false, err }));
+    });
+  }
 }
 
 export default new AppUserLogic();
