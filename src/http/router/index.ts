@@ -20,6 +20,7 @@ import venueController from "../controller/VenueController";
 import loyaltySchemeController from "../controller/LoyaltySchemeController";
 import offerController from "../controller/OfferController";
 import appUserController from "../controller/AppUserController";
+import reportController from "../controller/ReportController";
 
 const swaggerOptions = {
   explorer: true,
@@ -55,6 +56,9 @@ router.post("/app-users/details", appUserController.details);
 router.post("/app-users/rewards", appUserController.rewards);
 router.post("/app-users/claims", appUserController.claims);
 router.post("/app-users/points", appUserController.points);
+
+// ─── REPORT ─────────────────────────────────────────────────────────────────────
+router.post("/reports/sites-statistics-amount", reportController.management);
 
 // ─── AUTHORIZATION ──────────────────────────────────────────────────────────────
 router.post("/login", authController.login);

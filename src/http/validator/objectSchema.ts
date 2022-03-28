@@ -141,6 +141,16 @@ export const objectSchema = {
   points: {
     user_id: { type: "int", force_type: true },
   },
+
+  report: {
+    management: {
+      entity_number: { type: "int" },
+      search_type: { type: "int" },
+      last_day_number: { type: "int" },
+      report_kind: { type: "int" },
+      venue_type: { type: "string" },
+    },
+  },
 };
 
 export default objectSchema;
