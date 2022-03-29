@@ -1,6 +1,9 @@
 import { TagsEnum } from "./enums";
 
 export default {
+  /* -------------------------------------------------------------------------- */
+  /*                             ANCHOR: SHAKE HAND                             */
+  /* -------------------------------------------------------------------------- */
   "/shake-hand": {
     post: {
       tags: [TagsEnum.GENERAL],
@@ -16,6 +19,33 @@ export default {
               required: ["api_key"],
               properties: {
                 api_key: { type: "string", example: { $ref: "#/variables/api_key" } },
+              },
+            },
+          },
+        },
+      },
+      responses: { 200: { description: "OK" }, 401: { description: "Unauthorized" } },
+    },
+  },
+  /* -------------------------------------------------------------------------- */
+  /*                                ANCHOR: LOGIN                               */
+  /* -------------------------------------------------------------------------- */
+  "/login": {
+    post: {
+      tags: [TagsEnum.GENERAL],
+      summary: "Returns login token.",
+      description: "This api is created to get login token if email and password is correct.",
+      requestBody: {
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              in: "body",
+              required: ["api_key", "email", "password"],
+              properties: {
+                api_key: { type: "string", example: { $ref: "#/variables/api_key" } },
+                email: { type: "string", example: { $ref: "#/variables/user/email" } },
+                password: { type: "string", example: { $ref: "#/variables/user/password" } },
               },
             },
           },

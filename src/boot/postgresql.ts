@@ -19,6 +19,7 @@ pool_main
   .on("connect", () => console.log("Main postgres connected"))
   .on("remove", () => console.log("Main postgres connection closed"))
   .on("error", (err) => {
+    console.log("PSQL Error Main");
     console.error(err);
     process.exit(1);
   });
@@ -42,6 +43,7 @@ pool_cloud
   .on("connect", () => console.log("Cloud postgres connected"))
   .on("remove", () => console.log("Cloud postgres connection closed"))
   .on("error", (err) => {
+    console.log("PSQL Error Cloud");
     console.error(err);
     process.exit(1);
   });
