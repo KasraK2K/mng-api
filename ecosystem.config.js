@@ -12,9 +12,9 @@
 module.exports = {
   apps: [
     {
-      name: "mng",
+      name: "api.mng",
       log_date_format: "YYYY-MM-DD HH:mm Z",
-      script: "dist/ssr/www/index.js",
+      script: "src/index.ts",
       autorestart: false,
       watch: false,
       time: true,
