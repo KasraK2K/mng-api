@@ -14,6 +14,8 @@ export interface IApplicationConfig {
   portal_version: string;
   logPath: string;
   logOnMongo: boolean;
+  logOnFile: boolean;
+  logOnConsole: boolean;
 }
 
 // ──────────────────────────────────────────────────────────────── DATABASES ─────

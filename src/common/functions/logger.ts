@@ -53,7 +53,7 @@ export const logger = (text: any, type = LoggerEnum.INFO) => {
     .replace(/{red}/g, "\x1b[31m")
     .replace(/{reset}/g, "\x1b[0m");
 
-  !applicationConfig.logOnMongo && console.log("-" + text);
+  applicationConfig.logOnConsole && console.log("- " + text);
 
   // ─────────────────────────────────────────────── START: SAVE LOG ON MONGODB ─────
   applicationConfig.logOnMongo &&
@@ -85,11 +85,13 @@ export const logger = (text: any, type = LoggerEnum.INFO) => {
     })();
   // ───────────────────────────────────────────────── END: SAVE LOG ON MONGODB ─────
 
-  if (isServer) {
-    fs.appendFile(path + type + ".log", `${date} ${time} ${text} \n`, (err) => console.log(err));
+  if (applicationConfig.logOnFile) {
+    if (isServer) {
+      fs.appendFile(path + type + ".log", `${date} ${time} ${text} \n`, (err) => console.log(err));
 
-    ![LoggerEnum.REQUEST].includes(type) &&
-      fs.appendFile(path + "all.log", `${date} ${time} ${text} \n`, (err) => console.log(err));
+      ![LoggerEnum.REQUEST].includes(type) &&
+        fs.appendFile(path + "all.log", `${date} ${time} ${text} \n`, (err) => console.log(err));
+    }
   }
 };
 

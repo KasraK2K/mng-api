@@ -6,9 +6,9 @@ class PointRepository extends Repository {
   list(args: IPointList): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       const whereArray = [];
-      if ("user_id" in args) whereArray.push(` r.user_id = ${Number(args.user_id) || 0} `);
-      if ("venue_id" in args) whereArray.push(` r.venue_id = ${Number(args.venue_id) || 0} `);
-      if ("scheme_id" in args) whereArray.push(` r.scheme_id = ${Number(args.scheme_id) || 0} `);
+      if ("user_id" in args) whereArray.push(` p.user_id = ${Number(args.user_id) || 0} `);
+      if ("venue_id" in args) whereArray.push(` p.venue_id = ${Number(args.venue_id) || 0} `);
+      if ("scheme_id" in args) whereArray.push(` p.scheme_id = ${Number(args.scheme_id) || 0} `);
 
       const whereStr = whereArray.length > 0 ? " WHERE " + whereArray.join(" AND ") : "";
 

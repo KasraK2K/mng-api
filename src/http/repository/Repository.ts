@@ -110,11 +110,7 @@ class Repository {
                 case "23505": // unique key is already exist
                   logger(`{red}${err.detail}{reset}`, LoggerEnum.ERROR);
                   logger(`{red}${err.stack}{reset}`, LoggerEnum.ERROR);
-                  return reject({
-                    result: false,
-                    error_code: 3008,
-                    errors: [err.detail],
-                  });
+                  return reject({ result: false, error_code: 3008, errors: [err.detail] });
 
                 case "42P01":
                   logger(`{red}Database Table Not Found{reset}`, LoggerEnum.ERROR);
