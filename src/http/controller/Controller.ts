@@ -23,7 +23,7 @@ class Controller {
 
   private static responseGenerator(options: IResGenOptions) {
     const { req, result, data } = options;
-    const response = {
+    const response: Record<string, any> = {
       api_version: applicationConfig.api_version,
       front_version: applicationConfig.front_version,
       portal_vertion: applicationConfig.portal_version,
@@ -32,9 +32,9 @@ class Controller {
       mode,
       result,
       count: data.length,
-      data,
     };
     logger(response, LoggerEnum.REQUEST);
+    response.data = data;
     return response;
   }
 

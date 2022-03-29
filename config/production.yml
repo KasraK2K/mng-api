@@ -2,9 +2,9 @@ mode: production
 
 application:
   logPath: "/var/embargo-logs/mng-api/"
-  logOnFile: false
+  logOnFile: true
   logOnMongo: false
-  logOnConsole: false
+  logOnConsole: true
 
 database:
   mongodb:
