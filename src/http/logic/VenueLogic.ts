@@ -11,7 +11,7 @@ class VenueLogic extends Logic {
         await venueRepository
           .list(value)
           .then((response) => resolve({ result: true, data: response }))
-          .catch((err) => reject({ result: false, err }));
+          .catch((err) => reject({ result: false, ...err }));
     });
   }
 
@@ -71,7 +71,7 @@ class VenueLogic extends Logic {
         await venueRepository
           .upsert(args.data, sql_schema)
           .then((response) => resolve({ result: true, data: response }))
-          .catch((err) => reject({ result: false, err }));
+          .catch((err) => reject({ result: false, ...err }));
       }
     });
   }

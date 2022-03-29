@@ -40,7 +40,7 @@ class Controller {
 
   private static errorGenerator(options: IErrGenOptions) {
     const { req, result, error_code, error_user_messages } = options;
-    const error = getError(error_code);
+    const error = getError(error_code ?? 3000);
     const response = {
       api_version: applicationConfig.api_version,
       front_version: applicationConfig.front_version,
@@ -49,8 +49,8 @@ class Controller {
       env: process.env.NODE_ENV,
       mode,
       result,
-      error_code: error.code ?? 3000,
-      error_message: error.message ?? [],
+      error_code: error.code,
+      error_message: error.message,
       error_user_messages,
     };
     logger(response, LoggerEnum.REQUEST);

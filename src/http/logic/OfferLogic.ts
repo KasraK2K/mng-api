@@ -10,7 +10,7 @@ class OfferLogic extends Logic {
         await offerRepository
           .list(value)
           .then((response) => resolve({ result: true, data: response }))
-          .catch((err) => reject({ result: false, err }));
+          .catch((err) => reject({ result: false, ...err }));
     });
   }
 
@@ -65,7 +65,7 @@ class OfferLogic extends Logic {
         await offerRepository
           .upsert(value, sql_schema)
           .then((response) => resolve({ result: true, data: response }))
-          .catch((err) => reject({ result: false, err }));
+          .catch((err) => reject({ result: false, ...err }));
       }
     });
   }

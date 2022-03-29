@@ -106,10 +106,36 @@ class Repository {
               resolve(qres);
             })
             .catch((err) => {
-              logger(`{red} error executeQuery {reset}`);
-              logger(`{red} ${query} {reset}`);
-              logger(`{red}${err.stack}{reset}`, LoggerEnum.ERROR);
-              reject(err);
+              switch (err.code) {
+                case "23505": // unique key is already exist
+                  logger(`{red}${err.detail}{reset}`, LoggerEnum.ERROR);
+                  logger(`{red}${err.stack}{reset}`, LoggerEnum.ERROR);
+                  return reject({
+                    result: false,
+                    error_code: 3008,
+                    errors: [err.detail],
+                  });
+
+                case "42P01":
+                  logger(`{red}Database Table Not Found{reset}`, LoggerEnum.ERROR);
+                  logger(`{red}${err.stack}{reset}`, LoggerEnum.ERROR);
+                  return reject({ result: false, error_code: 3007 });
+
+                case "42703":
+                  logger(`{red}Database Column Not Found{reset}`, LoggerEnum.ERROR);
+                  logger(`{red}${err.stack}{reset}`, LoggerEnum.ERROR);
+                  return reject({ result: false, error_code: 3010 });
+
+                case "ECONNREFUSED":
+                  logger(`{red}Database Connection Refused{reset}`, LoggerEnum.ERROR);
+                  logger(`{red}${err.stack}{reset}`, LoggerEnum.ERROR);
+                  return reject({ result: false, error_code: 3009 });
+
+                default:
+                  logger(`{red}${err.message}{reset}`, LoggerEnum.ERROR);
+                  logger(`{red}${err.stack}{reset}`, LoggerEnum.ERROR);
+                  return reject(err);
+              }
             })
             .finally(() => {
               client.release();

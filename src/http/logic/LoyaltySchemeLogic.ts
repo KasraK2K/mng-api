@@ -10,7 +10,7 @@ class LoyaltySchemeLogic extends Logic {
         await loyaltySchemeRepository
           .list(value)
           .then((response) => resolve({ result: true, data: response }))
-          .catch((err) => reject({ result: false, err }));
+          .catch((err) => reject({ result: false, ...err }));
     });
   }
 
@@ -43,7 +43,7 @@ class LoyaltySchemeLogic extends Logic {
         await loyaltySchemeRepository
           .upsert(value, sql_schema)
           .then((response) => resolve({ result: true, data: response }))
-          .catch((err) => reject({ result: false, err }));
+          .catch((err) => reject({ result: false, ...err }));
       }
     });
   }

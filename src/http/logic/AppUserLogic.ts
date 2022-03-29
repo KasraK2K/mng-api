@@ -13,7 +13,7 @@ class AppUserLogic extends Logic {
         await appUserRepository
           .list({ summary: true })
           .then((response) => resolve({ result: true, data: response }))
-          .catch((err) => reject({ result: false, err }));
+          .catch((err) => reject({ result: false, ...err }));
     });
   }
 
@@ -27,7 +27,7 @@ class AppUserLogic extends Logic {
             id: args.id,
           })
           .then((response) => resolve({ result: true, data: response }))
-          .catch((err) => reject({ result: false, err }));
+          .catch((err) => reject({ result: false, ...err }));
       }
     });
   }
@@ -41,7 +41,7 @@ class AppUserLogic extends Logic {
         await rewardRepository
           .list({ user_id })
           .then((response) => resolve({ result: true, data: response }))
-          .catch((err) => reject({ result: false, err }));
+          .catch((err) => reject({ result: false, ...err }));
       }
     });
   }
@@ -55,7 +55,7 @@ class AppUserLogic extends Logic {
         await claimRepository
           .list({ user_id })
           .then((response) => resolve({ result: true, data: response }))
-          .catch((err) => reject({ result: false, err }));
+          .catch((err) => reject({ result: false, ...err }));
       }
     });
   }
@@ -69,7 +69,7 @@ class AppUserLogic extends Logic {
         await pointRepository
           .list({ user_id })
           .then((response) => resolve({ result: true, data: response }))
-          .catch((err) => reject({ result: false, err }));
+          .catch((err) => reject({ result: false, ...err }));
       }
     });
   }

@@ -10,7 +10,7 @@ class ReportLogic extends Logic {
         await reportRepository
           .management(value)
           .then((response) => resolve({ result: true, data: response }))
-          .catch((err) => reject({ result: false, err }));
+          .catch((err) => reject({ result: false, ...err }));
     });
   }
 
@@ -22,7 +22,7 @@ class ReportLogic extends Logic {
         await reportRepository
           .onboarding(value)
           .then((response) => resolve({ result: true, data: response }))
-          .catch((err) => reject({ result: false, err }));
+          .catch((err) => reject({ result: false, ...err }));
     });
   }
 }
