@@ -28,14 +28,26 @@ export default {
     "/login": general["/login"],
     // ────────────────────────────────────────────── MANAGER USER ─────
     "/mng-users/list": managerUser["/mng-users/list"],
+    "/mng-users/upsert": managerUser["/mng-users/upsert"],
   },
 
   variables: {
     api_key:
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzb3VyY2UiOiJtbmciLCJpYXQiOjE2NDM0MDM5NjV9.TDXx-pdtzEqMxaXRGXtk6MZkmgOILvQpYplzvCCwP3k",
+    token:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjMsImlhdCI6MTY0ODU2NzA2MSwiZXhwIjoxNjgwMTAzMDYxfQ.pTFv_4s2QSjpvPhS-vt3OtYFoATnqA37THrbNDPs2Hc",
     user: {
+      id: 42,
+      name: "Kasra Karami",
       email: "kasra@email.com",
+      access: "11111",
       password: "12345678",
+    },
+  },
+
+  components: {
+    securitySchemes: {
+      bearerAuth: { type: "http", scheme: "bearer", bearerFormat: "JWT" },
     },
   },
 };
