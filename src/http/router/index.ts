@@ -9,6 +9,8 @@
 //=======================================================
 
 import express from "express";
+import path from "path";
+import fs from "fs";
 import Controller from "../controller/Controller";
 import homeController from "../controller/HomeController";
 import authController from "../controller/AuthController";
@@ -27,6 +29,7 @@ const swaggerOptions = {
   swaggerOptions: {
     validatorUrl: null,
   },
+  customCss: fs.readFileSync(path.join(__dirname, "../../swagger/css/material.css"), "utf8"),
 };
 
 const router = express.Router();
