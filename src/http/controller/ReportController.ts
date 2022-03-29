@@ -18,6 +18,22 @@ class ReportController extends Controller {
         })
       );
   }
+
+  public async onboarding(req: Request, res: Response) {
+    await reportLogic
+      .onboarding(req.body)
+      .then((response) => super.resGen({ req, res, result: response.result, data: response.data }))
+      .catch((err) =>
+        super.resGen({
+          req,
+          res,
+          status: err.code,
+          result: err.result,
+          error_code: err.error_code,
+          error_user_messages: err.errors,
+        })
+      );
+  }
 }
 
 export default new ReportController();

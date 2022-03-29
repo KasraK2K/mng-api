@@ -141,7 +141,9 @@ export const objectSchema = {
   points: {
     user_id: { type: "int", force_type: true },
   },
-
+  // ──────────────────────────────────────────────────────────────
+  //   :::::: R E P O R T : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────
   report: {
     management: {
       entity_number: { type: "int" },
@@ -149,6 +151,9 @@ export const objectSchema = {
       last_day_number: { type: "int" },
       report_kind: { type: "int" },
       venue_type: { type: "string" },
+    },
+    onboarding: {
+      venue_id: { type: "int", force_type: true },
     },
   },
 };

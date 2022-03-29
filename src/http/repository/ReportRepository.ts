@@ -13,6 +13,38 @@ class ReportRepository extends Repository {
     });
   }
 
+  onboarding(args: Record<string, any>) {
+    const query = `
+      WITH with_table AS (
+        SELECT u.id, u.name, u.email, u.rtimestamp AS user_register_at, MIN(p.rtimestamp) AS first_point_at
+        FROM "Users" u
+        LEFT JOIN "UserPoints" p on p.user_id = u.id
+        WHERE 
+        p.venue_id = ${args.venue_id}
+        GROUP BY u.id,user_register_at
+        LIMIT 100
+      )
+      SELECT * 
+      FROM with_table
+      WHERE 
+        (user_register_at + '15 minute'::interval) > first_point_at
+        AND (user_register_at) < first_point_at
+    `;
+
+    return new Promise((resolve, reject) => {
+      super
+        .executeQuery({ source: pg.pool_main, query })
+        .then((response) => {
+          return resolve(response.rows);
+        })
+        .catch((err) => {
+          logger(`{red}Error at getting onboardingReport{reset}`, LoggerEnum.ERROR);
+          logger(`{red}${err.stack}{reset}`, LoggerEnum.ERROR);
+          return reject(err);
+        });
+    });
+  }
+
   private getReportQuery(args: Record<string, any>): string {
     const report_kind = "report_kind" in args ? args.report_kind : 1;
     const search_type = args.search_type ?? 0; // 0:less 1:over

@@ -59,6 +59,7 @@ router.post("/app-users/points", appUserController.points);
 
 // ─── REPORT ─────────────────────────────────────────────────────────────────────
 router.post("/reports/sites-statistics-amount", reportController.management);
+router.post("/reports/onboarding", reportController.onboarding);
 
 // ─── AUTHORIZATION ──────────────────────────────────────────────────────────────
 router.post("/login", authController.login);
