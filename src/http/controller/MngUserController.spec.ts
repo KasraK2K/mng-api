@@ -41,14 +41,11 @@ describe("MngUserController", () => {
   describe("mngUserController.list()", () => {
     it("mngUserController.list() should use mngUserLogic.list", async () => {
       // jest.fn(mngUserLogic.list).mockReturnValue(Promise.resolve({ result: true, data: { key: "value" } }));
-      
       // jest
       //   .mock("./../logic/MngUserLogic.ts")
       //   .fn(mngUserLogic.list)
       //   .mockReturnValue(Promise.resolve({ result: true, data: { key: "value" } }));
-      
       // jest.spyOn(mngUserLogic, "list").mockReturnValue(Promise.resolve({ result: true, data: { key: "value" } }));
-     
       // const result = await controller.list(req, res);
     });
   });

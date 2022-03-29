@@ -26,9 +26,7 @@ import reportController from "../controller/ReportController";
 
 const swaggerOptions = {
   explorer: true,
-  swaggerOptions: {
-    validatorUrl: null,
-  },
+  swaggerOptions: { validatorUrl: null },
   customCss: fs.readFileSync(path.join(__dirname, "../../swagger/css/material.css"), "utf8"),
 };
 
