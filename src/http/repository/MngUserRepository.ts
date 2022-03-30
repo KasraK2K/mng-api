@@ -7,7 +7,7 @@ class MngUserRepository extends Repository {
       const whereArray = [];
       if (args.email) whereArray.push(` email = '${args.email}' `);
       if (args.id) whereArray.push(` id = '${args.id}' `);
-      const whereStr = whereArray.join(" and ");
+      const whereStr = whereArray.join(" AND ");
 
       await super
         .readTable({ table: " mng_users ", where: whereStr }, pg.pool_cloud)
@@ -55,14 +55,14 @@ class MngUserRepository extends Repository {
       }
       // ───────────────────────────────────────── UPDATE EXIST USER ─────
       else {
-        const editPassword = password.length ? `password = '${hashPassword}'` : "";
+        const editPassword = password.length ? `, password = '${hashPassword}'` : "";
         if (existUser.length && existUser[0].id !== Number(id)) {
           return reject({ result: false, error_code: 3003 });
         } else {
           query = `
             Update mng_users
-            SET name = '${name}', email = '${email}', access = '${access}', ${editPassword}
-            WHERE id = ${id}
+            SET name = '${name}', email = '${email}', access = '${access}' ${editPassword}
+            WHERE id = '${id}'
           `;
         }
       }
