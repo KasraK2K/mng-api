@@ -27,7 +27,7 @@ import reportController from "../controller/ReportController";
 const swaggerOptions = {
   explorer: true,
   swaggerOptions: { validatorUrl: null },
-  customCss: fs.readFileSync(path.join(__dirname, "../../swagger/css/outline.css"), "utf8"),
+  customCss: fs.readFileSync(path.join(__dirname, "../../swagger/css/feeling-blue.css"), "utf8"),
 };
 
 const router = express.Router();

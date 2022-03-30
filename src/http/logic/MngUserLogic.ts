@@ -5,7 +5,7 @@ import { hashGen } from "./../../common/functions/bcrypt";
 class MngUserLogic extends Logic {
   public list(args: Record<string, any>): Promise<any> {
     return new Promise(async (resolve, reject) => {
-      const value = objectValidator(args ?? {}, objectSchema.manager.list);
+      const value = objectValidator(args, objectSchema.manager.list);
 
       if ("errors" in value) return reject({ result: false, error_code: 3002, errors: value.errors });
       else
@@ -22,7 +22,7 @@ class MngUserLogic extends Logic {
       // const portal_user_id: number = args.portal_user_id || -2;
       // const portal_user_name: string = args.portal_user_name || "-";
 
-      const value = objectValidator(args.data ?? {}, objectSchema.manager.upsert);
+      const value = objectValidator(args.data, objectSchema.manager.upsert);
 
       if ("errors" in value) return reject({ result: false, error_code: 3002, errors: value.errors });
       /* REVIEW I hold this for venue and we see that another time */
