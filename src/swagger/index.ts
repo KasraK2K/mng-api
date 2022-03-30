@@ -2,6 +2,7 @@ import config from "config";
 import { IConfig } from "../../config/config.interface";
 import general from "./general-endpoints";
 import managerUser from "./manager-user-endpoints";
+import venue from "./venue-endpoints-copy";
 
 const configs: IConfig = config.util.toObject();
 
@@ -29,6 +30,9 @@ export default {
     // ────────────────────────────────────────────── MANAGER USER ─────
     "/mng-users/list": managerUser["/mng-users/list"],
     "/mng-users/upsert": managerUser["/mng-users/upsert"],
+    // ───────────────────────────────────────────────────── VENUE ─────
+    "/venues/list": venue["/venues/list"],
+    "/venues/upsert": venue["/venues/upsert"],
   },
 
   variables: {
@@ -42,6 +46,11 @@ export default {
       email: "kasra@email.com",
       access: "11111",
       password: "12345678",
+    },
+    search: {
+      general: 924,
+      beacon: "10001-41999",
+      id: "901",
     },
   },
 
